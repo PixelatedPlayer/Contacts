@@ -1,5 +1,7 @@
 package Contact;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +32,7 @@ public class ContactTest
 	@Test
 	public void test()
 	{
+		//fields
 		String firstName = "George";
 		String lastName = "Washington";
 		String address = "Washington Home Address #2";
@@ -38,6 +41,7 @@ public class ContactTest
 		String zip = "55555";
 		String phone = "555 555 5555";
 
+		//specific fields
 		String relationship = "Father";
 		String birthday = "02/22/1732";
 
@@ -84,11 +88,13 @@ public class ContactTest
 		System.out.println(relationship + " valid?: " + famC.setRelationship(relationship));
 		System.out.println(birthday + " valid?: " + famC.setBirthday(birthday));
 
+		//set confirmation
 		System.out.println("\nCreated contacts:");
 		System.out.println(friC.toString());
 		System.out.println(busC.toString());
 		System.out.println(famC.toString());
 
+		//invalid checks
 		System.out.println("\nInvalid checks:");
 
 		firstName = "george";
@@ -125,11 +131,28 @@ public class ContactTest
 		System.out.println(zip + " valid zip code?: " + friC.setZip(zip));
 		System.out.println(phone + " valid phone number?: " + friC.setPhone(phone));
 
-		System.out.println();
-		System.out.println("Constructor test");
+		//constructor test
+		System.out.println("\nConstructor test");
+
 		famC = new FamilyContact("Thomas", "Jefferson", "Mozebarry ln.", "Pennsylvania City", "PA", "55555",
 				"(555)555-5555", "Father", "04/13/1743");
 		System.out.println(famC.toString());
+
+		//serialization test
+		System.out.println("\nSerialization Testing:");
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		contacts = new ArrayList<Contact>();
+
+		contacts.add(famC);
+		contacts.add(friC);
+		contacts.add(busC);
+
+		Contact.serialize(contacts, "contacts.ser");
+		contacts = Contact.deserialize("contacts.ser");
+		for (Contact c : contacts)
+		{
+			System.out.println(c.toString());
+		}
 	}
 
 }

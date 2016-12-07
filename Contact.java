@@ -1,11 +1,17 @@
 package Contact;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Contact class.
  */
-public abstract class Contact //implements Serializable
+public abstract class Contact implements Serializable
 {
 	//fields
 	private String firstName;
@@ -274,15 +280,47 @@ public abstract class Contact //implements Serializable
 	{
 		return String.format("%s %s, %s, %s, %s, %s, (%s)", firstName, lastName, address, city, state, zip, phone);
 	}
+	//serializaiton stuffs
 
-	//TODO serialization probs in each individual subclass - one list for each contact type since 3 seperate panels for each type
-	public static void serializeContacts(ArrayList<Contact> cList, String fileName)
+	/**
+	 * write ArrayList<Contact> to file
+	 * 
+	 * @param contacts
+	 *            ArrayList<Contact> contacts list
+	 * @param fileName
+	 *            save destination
+	 */
+	public static void serialize(ArrayList<Contact> contacts, String fileName)
 	{
-
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName)))
+		{
+			out.writeObject(contacts);
+		} catch (IOException ex)
+		{
+			System.out.println("Error during serialization");
+			System.out.println(ex.getMessage());
+		}
 	}
 
-	public static void main(String[] args)
+	/**
+	 * read a file as ArrayList<Contact>
+	 * 
+	 * @param fileName
+	 *            read location
+	 * @return ArrayList<Contact> contacts
+	 */
+	public static ArrayList<Contact> deserialize(String fileName)
 	{
+		ArrayList<Contact> contacts = null;
+		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName)))
+		{
+			contacts = (ArrayList<Contact>) in.readObject();
+		} catch (IOException | ClassNotFoundException ex)
+		{
+			System.out.println("Error during deserialization of " + fileName);
+			System.out.println(ex.getMessage());
+		}
 
+		return contacts;
 	}
 }
