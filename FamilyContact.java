@@ -1,27 +1,57 @@
+package Contact;
 
+/**
+ * FamilyContact class
+ */
 public class FamilyContact extends Contact
 {
+	//unique fields
 	private String relationship;
-	//either have 3 strings or ints for month/day/year or Date class
-	private String birthdayMonth;
-	private String birthdayDay;
-	private String birthdayYear;
+	private String birthday;
 
-	public FamilyContact(String firstName, String lastName, String address, String city, String state, String zip,
-			String phone, String relationship, String birthdayMonth, String birthdayDay, String birthdayYear)
+	/**
+	 * Empty FamilyContact constructor
+	 */
+	public FamilyContact()
 	{
-		super(firstName, lastName, address, city, state, zip, phone);
-		this.relationship = relationship;
-		this.birthdayMonth = birthdayMonth;
-		this.birthdayDay = birthdayDay;
-		this.birthdayYear = birthdayYear;
+
 	}
 
+	/**
+	 * Parameterized FamilyContact constructor
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @param address
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param phone
+	 * @param relationship
+	 * @param birthdayMonth
+	 * @param birthdayDay
+	 * @param birthdayYear
+	 */
+	public FamilyContact(String firstName, String lastName, String address, String city, String state, String zip,
+			String phone, String relationship, String birthday)
+	{
+		super(firstName, lastName, address, city, state, zip, phone);
+		setRelationship(relationship);
+		setBirthday(birthday);
+	}
+
+	/**
+	 * @return relationship
+	 */
 	public String getRelationship()
 	{
 		return relationship;
 	}
 
+	/**
+	 * @param relationship
+	 * @return whether the given relationship is valid
+	 */
 	public boolean setRelationship(String relationship)
 	{
 		if (relationshipValid(relationship))
@@ -32,20 +62,37 @@ public class FamilyContact extends Contact
 		return false;
 	}
 
-	//TODO not sure how to do setters for birthday, since there are 3 seperate ones.
-	// you wouldn't be able to validate the date until all 3 are in.
-	// either do it as one string and split it or validate only when all 3 are in and on update.
-
-	public String getBirthdayMonth()
+	/**
+	 * @param birthday
+	 * @return whether the given birthday date is valid
+	 */
+	public boolean setBirthday(String birthday)
 	{
-		return birthdayMonth;
+		if (birthdayValid(birthday))
+		{
+			this.birthday = birthday;
+			return true;
+		}
+		return false;
 	}
 
-	//TODO confirm these are it..
-	private String[] relationships = new String[] { "Brother", "Sister", "Mother", "Father", "Son", "Daughter", "Wife",
-			"Husband", "Spouse", "Cousin", "Grandfather", "Grandmother", "Aunt", "Uncle", "Nephew", "Niece", "Grandson",
-			"Granddaughter" };
+	/**
+	 * @return birthday
+	 */
+	public String getBirthday()
+	{
+		return birthday;
+	}
 
+	//list of valid relationships. static because it's not changed between different instances
+	private static String[] relationships = new String[] { "Father", "Mother", "Brother", "Sister",
+			"Son", "Daughter", "Uncle", "Aunt", "Nephew", "Niece", "Father-in-Law", "Mother-in-Law",
+			"Brother-in-Law", "Sister-in-Law", "Grandfather", "Grandmother" };
+
+	/**
+	 * @param relationship
+	 * @return whether the given relationship is valid
+	 */
 	private boolean relationshipValid(String relationship)
 	{
 		for (String s : relationships)
@@ -56,32 +103,35 @@ public class FamilyContact extends Contact
 		return false;
 	}
 
-	//month/day/year or day/month/year?
-	//check which one it is, and make sure it is valid to that format
-	//accept 2 or 4 digit for year
-	// OR
-	// GUI has 3 text boxes, specified as month day year, validate each of those.
-
-	// do we alloy any year? or only reasonable ones?
-	private boolean birthdayValid(String month, String day, String year)
+	/**
+	 * @param birthday
+	 * @return whether the given birthday is valid
+	 */
+	private boolean birthdayValid(String birthday)
 	{
 		try
 		{
-			int monthInt = Integer.parseInt(month);
-			int dayInt = Integer.parseInt(day);
-			int yearInt = Integer.parseInt(year);
+			//valid input format
+			if (!(birthday.matches("[0-9]{2}(/|-| )[0-9]{2}(/|-| )[0-9]{4}")))
+				return false;
 
-			//if invalid month or day stop trying
+			//seperate string into integers
+			int monthInt = Integer.parseInt(birthday.substring(0, 2));
+			int dayInt = Integer.parseInt(birthday.substring(3, 5));
+			int yearInt = Integer.parseInt(birthday.substring(6, 10));
+
+			//if invalid month or day or negative stop trying
 			if (monthInt <= 0 || monthInt > 12)
 				return false;
 			if (dayInt <= 0 || dayInt > 31)
 				return false;
+			if (yearInt < 0)
+				return false;
 
 			//for months with less than 31 days
-			switch (monthInt)
-			{
 			//februray, considers leap year as well
-			case 2:
+			if (monthInt == 2)
+			{
 				if (yearInt % 4 == 0)
 				{ //is a leap year
 					if (dayInt > 29)
@@ -92,21 +142,11 @@ public class FamilyContact extends Contact
 					if (dayInt > 28)
 						return false;
 				}
-				//April
-			case 4:
-				if (monthInt > 30)
-					return false;
-				//June
-			case 6:
-				if (monthInt > 30)
-					return false;
-				//September
-			case 9:
-				if (monthInt > 30)
-					return false;
-				//November
-			case 11:
-				if (monthInt > 30)
+			}
+			//April, June, September, November
+			if (monthInt == 4 || monthInt == 6 || monthInt == 9 || monthInt == 11)
+			{
+				if (dayInt > 30)
 					return false;
 			}
 		} catch (Exception ex)
@@ -116,5 +156,13 @@ public class FamilyContact extends Contact
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return a string describing the contact
+	 */
+	public String toString()
+	{
+		return super.toString() + ", " + String.format("%s, %s", relationship, birthday);
 	}
 }

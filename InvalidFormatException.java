@@ -1,0 +1,14 @@
+package Contact;
+
+public class InvalidFormatException extends Exception
+{
+	public InvalidFormatException()
+	{
+		super();
+	}
+
+	public InvalidFormatException(String arg)
+	{
+		super(arg);
+	}
+}

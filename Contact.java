@@ -1,10 +1,13 @@
+package Contact;
+
 import java.util.ArrayList;
 
-// panel system - one jframe for 4 different screens - welcome page - business - family - friends
-// if neccessary make another class that saves each of the lists (3) and serialize that to save into a single file
-// right now in order to check if valid you have to set it (b/c they are private) do we want to set it every time they press enter in a text box? if not make the validations public
+/**
+ * Contact class.
+ */
 public abstract class Contact //implements Serializable
 {
+	//fields
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -13,32 +16,49 @@ public abstract class Contact //implements Serializable
 	private String zip;
 	private String phone;
 
-	// Theoretically, contacts are created when you click new, and have no information yet
-	// so you should never be giving anything to the constructor, only using set when you update.
-	// therefore we might want to remove paramaterized constructors. and have only an empty one.
-	// do this for sub classes as well.
-	public Contact(String firstName, String lastName, String address, String city, String state, String zip,
-			String phone)
-	{
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.phone = phone;
-	}
-
+	/**
+	 * Empty Contact constructor
+	 */
 	public Contact()
 	{
 
 	}
 
+	/**
+	 * Parameterized Contact constructor
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @param address
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param phone
+	 */
+	public Contact(String firstName, String lastName, String address, String city, String state, String zip,
+			String phone)
+	{
+		setFirstName(firstName);
+		setLastName(lastName);
+		setAddress(address);
+		setCity(city);
+		setState(state);
+		setZip(zip);
+		setPhone(phone);
+	}
+
+	/**
+	 * @return first name
+	 */
 	public String getFirstName()
 	{
 		return firstName;
 	}
 
+	/**
+	 * @param firstName
+	 * @return whether the given first name is valid
+	 */
 	public boolean setFirstName(String firstName)
 	{
 		if (firstNameValid(firstName))
@@ -49,11 +69,18 @@ public abstract class Contact //implements Serializable
 		return false;
 	}
 
+	/**
+	 * @return last name
+	 */
 	public String getLastName()
 	{
 		return lastName;
 	}
 
+	/**
+	 * @param lastName
+	 * @return whether the given last name is valid
+	 */
 	public boolean setLastName(String lastName)
 	{
 		if (lastNameValid(lastName))
@@ -64,11 +91,18 @@ public abstract class Contact //implements Serializable
 		return false;
 	}
 
+	/**
+	 * @return address
+	 */
 	public String getAddress()
 	{
 		return address;
 	}
 
+	/**
+	 * @param address
+	 * @return whether the given address is valid
+	 */
 	public boolean setAddress(String address)
 	{
 		if (addressValid(address))
@@ -79,11 +113,18 @@ public abstract class Contact //implements Serializable
 		return false;
 	}
 
+	/**
+	 * @return city
+	 */
 	public String getCity()
 	{
 		return city;
 	}
 
+	/**
+	 * @param city
+	 * @return whether the given city is valid
+	 */
 	public boolean setCity(String city)
 	{
 		if (cityValid(city))
@@ -94,11 +135,18 @@ public abstract class Contact //implements Serializable
 		return false;
 	}
 
+	/**
+	 * @return state
+	 */
 	public String getState()
 	{
 		return state;
 	}
 
+	/**
+	 * @param state
+	 * @return whether the given state is valid
+	 */
 	public boolean setState(String state)
 	{
 		if (stateValid(state))
@@ -109,11 +157,18 @@ public abstract class Contact //implements Serializable
 		return false;
 	}
 
+	/**
+	 * @return zip code
+	 */
 	public String getZip()
 	{
 		return zip;
 	}
 
+	/**
+	 * @param zip
+	 * @return whether the given zip code is valid
+	 */
 	public boolean setZip(String zip)
 	{
 		if (zipValid(zip))
@@ -124,11 +179,18 @@ public abstract class Contact //implements Serializable
 		return false;
 	}
 
+	/**
+	 * @return phone number
+	 */
 	public String getPhone()
 	{
 		return phone;
 	}
 
+	/**
+	 * @param phone
+	 * @return whether the given phone number is valid
+	 */
 	public boolean setPhone(String phone)
 	{
 		if (phoneValid(phone))
@@ -139,43 +201,78 @@ public abstract class Contact //implements Serializable
 		return false;
 	}
 
+	/**
+	 * @param firstName
+	 * @return whether the given first name is valid
+	 */
 	private boolean firstNameValid(String firstName)
 	{
 		return firstName.matches("[A-Z][a-zA-Z'-]*");
 	}
 
+	/**
+	 * @param lastName
+	 * @return whether the given last name is valid
+	 */
 	private boolean lastNameValid(String lastName)
 	{
 		return lastName.matches("[A-Z][a-zA-Z'-]*");
 	}
 
+	/**
+	 * @param address
+	 * @return whether the given address is valid
+	 */
 	private boolean addressValid(String address)
 	{
-		return address.matches("[0-9A-Za-z #,.]");
+		return address.matches("[0-9A-Za-z #,.]*");
 	}
 
+	/**
+	 * @param city
+	 * @return whether the given city is valid
+	 */
 	private boolean cityValid(String city)
 	{
 		return city.matches("([A-Z][a-z]*[-' ]?)+");
 	}
 
+	/**
+	 * @param state
+	 * @return whether the given state is valid
+	 */
 	private boolean stateValid(String state)
 	{
-		return state.matches("([A-Z][a-z]*[-' ]?)+");
-		//return state.matches("^[0-9]");
+		return state.matches("[A-Z]{2}");
 	}
 
+	/**
+	 * @param zip
+	 * @return whether the given zip code is valid
+	 */
 	private boolean zipValid(String zip)
 	{
 		return zip.matches("[0-9]{5}");
 	}
 
+	/**
+	 * @param phone
+	 * @return whether the given phone number is valid
+	 */
 	private boolean phoneValid(String phone)
 	{
 		return phone.matches("\\(([0-9]{3})\\)([0-9]{3})-([0-9]{4})")
 				|| phone.matches("([0-9]{3})-([0-9]{3})-([0-9]{4})")
 				|| phone.matches("([0-9]{3})\\.([0-9]{3})\\.([0-9]{4})")
 				|| phone.matches("\\(?[0-9]{3}\\)? [0-9]{3} [0-9]{4}");
+	}
+
+	/**
+	 * @return a string describing the contact
+	 */
+	public String toString()
+	{
+		return String.format("%s %s, %s, %s, %s, %s, (%s)", firstName, lastName, address, city, state, zip, phone);
 	}
 
 	//TODO serialization probs in each individual subclass - one list for each contact type since 3 seperate panels for each type
