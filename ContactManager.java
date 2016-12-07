@@ -24,8 +24,12 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JSeparator;
 import java.awt.Label;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 public class ContactManager {
 
@@ -51,7 +55,7 @@ public class ContactManager {
 	private JPanel panelFriends;
 	private JPanel panelFamily;
 	private JLabel lblRelationship;
-	private JTextField textField;
+	private JTextField textFieldBirthday;
 	private JTextField textCompany;
 	private JTextField textWorkPhone;
 	private JTextField textEmail;
@@ -101,6 +105,19 @@ public class ContactManager {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
+				if ("W".equals(info.getName())){
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		}catch(Exception e)
+		{
+			
+		}
+		
+		
 		frmContactManagement = new JFrame();
 		frmContactManagement.setIconImage(Toolkit.getDefaultToolkit().getImage(ContactManager.class.getResource("/javax/swing/plaf/metal/icons/ocean/hardDrive.gif")));
 		frmContactManagement.setTitle("Contact Management");
@@ -118,14 +135,17 @@ public class ContactManager {
 		menuBar.add(mnFile);
 		
 		mntmOpen = new JMenuItem("Open...");
+		mntmOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		mntmOpen.setFont(new Font("Century", Font.PLAIN, 12));
 		mnFile.add(mntmOpen);
 		
 		mntmSave = new JMenuItem("Save");
+		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmSave.setFont(new Font("Century", Font.PLAIN, 12));
 		mnFile.add(mntmSave);
 		
 		mntmSaveAs = new JMenuItem("Save as...");
+		mntmSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mntmSaveAs.setFont(new Font("Century", Font.PLAIN, 12));
 		mnFile.add(mntmSaveAs);
 		
@@ -133,6 +153,7 @@ public class ContactManager {
 		mnFile.add(separator);
 		
 		mntmExit = new JMenuItem("Exit");
+		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -147,6 +168,11 @@ public class ContactManager {
 		menuBar.add(mnHelp);
 		
 		mntmJavadoc = new JMenuItem("JavaDoc");
+		mntmJavadoc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		mntmJavadoc.setFont(new Font("Century", Font.PLAIN, 12));
 		mnHelp.add(mntmJavadoc);
 		
@@ -158,6 +184,47 @@ public class ContactManager {
 		});
 		mntmAbout.setFont(new Font("Century", Font.PLAIN, 12));
 		mnHelp.add(mntmAbout);
+		
+		panelFamily = new JPanel();
+		panelFamily.setBounds(0, 234, 474, 168);
+		frmContactManagement.getContentPane().add(panelFamily);
+		panelFamily.setLayout(null);
+		panelFamily.setBackground(SystemColor.activeCaption);
+		
+		Label lblFamily = new Label("Family");
+		lblFamily.setAlignment(Label.CENTER);
+		lblFamily.setBounds(0, 0, 474, 26);
+		panelFamily.add(lblFamily);
+		
+		lblRelationship = new JLabel("Relationship");
+		lblRelationship.setFont(new Font("Century", Font.PLAIN, 13));
+		lblRelationship.setBounds(188, 25, 126, 14);
+		panelFamily.add(lblRelationship);
+		
+		JComboBox comboBoxRelationship = new JComboBox();
+		comboBoxRelationship.setFont(new Font("Century", Font.PLAIN, 13));
+		comboBoxRelationship.setModel(new DefaultComboBoxModel(new String[] {"Father", "Mother", "Brother", "Sister", "Son", "Daughter", "Uncle", "Aunt", "Nephew", "Niece", "Father-in-Law", "Mother-in-Law", "Brother-in-Law", "Sister-in-Law", "Grandfather", "Grandmother"}));
+		comboBoxRelationship.setBounds(188, 42, 126, 20);
+		panelFamily.add(comboBoxRelationship);
+		
+		JLabel lblBirthdaymmddyyyy = new JLabel("Birthday (mm/dd/yyyy)");
+		lblBirthdaymmddyyyy.setToolTipText("");
+		lblBirthdaymmddyyyy.setFont(new Font("Century", Font.PLAIN, 11));
+		lblBirthdaymmddyyyy.setBounds(324, 25, 140, 14);
+		panelFamily.add(lblBirthdaymmddyyyy);
+		
+		textFieldBirthday = new JTextField();
+		textFieldBirthday.setToolTipText("(mm/dd/yyyy)");
+		textFieldBirthday.setBackground(Color.LIGHT_GRAY);
+		textFieldBirthday.setFont(new Font("Century", Font.PLAIN, 13));
+		textFieldBirthday.setBounds(324, 42, 105, 20);
+		panelFamily.add(textFieldBirthday);
+		textFieldBirthday.setColumns(10);
+		
+		lblfamilypic = new JLabel("");
+		lblfamilypic.setBounds(-19, 0, 250, 198);
+		panelFamily.add(lblfamilypic);
+		lblfamilypic.setIcon(new ImageIcon(ContactManager.class.getResource("/Pictures/familySmall.png")));
 		
 		panelWelcome = new JPanel();
 		panelWelcome.setBackground(SystemColor.activeCaption);
@@ -181,6 +248,7 @@ public class ContactManager {
 		});
 		
 		lblWelcomeToFfb = new JLabel("Welcome To F.F.B.");
+		lblWelcomeToFfb.setToolTipText("Friends Family Business");
 		lblWelcomeToFfb.setForeground(Color.BLACK);
 		lblWelcomeToFfb.setBackground(Color.LIGHT_GRAY);
 		lblWelcomeToFfb.setHorizontalAlignment(SwingConstants.CENTER);
@@ -236,6 +304,7 @@ public class ContactManager {
 		panelTextFields.setLayout(null);
 		
 		textFirstName = new JTextField();
+		textFirstName.setToolTipText("First Name");
 		textFirstName.setBackground(Color.LIGHT_GRAY);
 		textFirstName.setFont(new Font("Century", Font.PLAIN, 13));
 		textFirstName.setBounds(186, 24, 114, 20);
@@ -243,6 +312,7 @@ public class ContactManager {
 		textFirstName.setColumns(10);
 		
 		textLastName = new JTextField();
+		textLastName.setToolTipText("Last Name");
 		textLastName.setBackground(Color.LIGHT_GRAY);
 		textLastName.setFont(new Font("Century", Font.PLAIN, 13));
 		textLastName.setBounds(314, 24, 114, 20);
@@ -250,6 +320,7 @@ public class ContactManager {
 		textLastName.setColumns(10);
 		
 		textAddress = new JTextField();
+		textAddress.setToolTipText("Address");
 		textAddress.setBackground(Color.LIGHT_GRAY);
 		textAddress.setFont(new Font("Century", Font.PLAIN, 13));
 		textAddress.setBounds(186, 71, 242, 20);
@@ -257,6 +328,7 @@ public class ContactManager {
 		textAddress.setColumns(10);
 		
 		textCity = new JTextField();
+		textCity.setToolTipText("City");
 		textCity.setBackground(Color.LIGHT_GRAY);
 		textCity.setFont(new Font("Century", Font.PLAIN, 13));
 		textCity.setBounds(186, 119, 114, 20);
@@ -264,6 +336,7 @@ public class ContactManager {
 		textCity.setColumns(10);
 		
 		textState = new JTextField();
+		textState.setToolTipText("Two Letters of State");
 		textState.setBackground(Color.LIGHT_GRAY);
 		textState.setFont(new Font("Century", Font.PLAIN, 13));
 		textState.setBounds(314, 119, 46, 20);
@@ -271,6 +344,7 @@ public class ContactManager {
 		textState.setColumns(10);
 		
 		textZipCode = new JTextField();
+		textZipCode.setToolTipText("5 Digit Zip");
 		textZipCode.setBackground(Color.LIGHT_GRAY);
 		textZipCode.setFont(new Font("Century", Font.PLAIN, 13));
 		textZipCode.setColumns(10);
@@ -278,6 +352,7 @@ public class ContactManager {
 		panelTextFields.add(textZipCode);
 		
 		textMobileNumber = new JTextField();
+		textMobileNumber.setToolTipText("(000)111-2222");
 		textMobileNumber.setBackground(Color.LIGHT_GRAY);
 		textMobileNumber.setFont(new Font("Century", Font.PLAIN, 13));
 		textMobileNumber.setBounds(186, 167, 114, 20);
@@ -285,6 +360,7 @@ public class ContactManager {
 		textMobileNumber.setColumns(10);
 		
 		textHomeNumber = new JTextField();
+		textHomeNumber.setToolTipText("(000)111-2222");
 		textHomeNumber.setBackground(Color.LIGHT_GRAY);
 		textHomeNumber.setFont(new Font("Century", Font.PLAIN, 13));
 		textHomeNumber.setColumns(10);
@@ -332,26 +408,31 @@ public class ContactManager {
 		panelTextFields.add(lblHomeNumber);
 		
 		JButton btnClear = new JButton("Clear");
+		btnClear.setToolTipText("Clear All Fields");
 		btnClear.setFont(new Font("Century", Font.PLAIN, 13));
 		btnClear.setBounds(10, 102, 89, 23);
 		panelTextFields.add(btnClear);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.setToolTipText("Add Contact");
 		btnAdd.setFont(new Font("Century", Font.PLAIN, 13));
 		btnAdd.setBounds(10, 131, 89, 23);
 		panelTextFields.add(btnAdd);
 		
 		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setToolTipText("Update Contact");
 		btnUpdate.setFont(new Font("Century", Font.PLAIN, 13));
 		btnUpdate.setBounds(9, 160, 89, 23);
 		panelTextFields.add(btnUpdate);
 		
 		JButton btnDelete = new JButton("Delete");
+		btnDelete.setToolTipText("Delete Contact");
 		btnDelete.setFont(new Font("Century", Font.PLAIN, 13));
 		btnDelete.setBounds(9, 189, 89, 23);
 		panelTextFields.add(btnDelete);
 		
 		btnBack = new JButton("Back");
+		btnBack.setToolTipText("Return to Main Menu");
 		btnBack.setIcon(new ImageIcon(ContactManager.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
 		btnBack.setHorizontalAlignment(SwingConstants.LEFT);
 		btnBack.setFont(new Font("Century", Font.PLAIN, 13));
@@ -396,49 +477,10 @@ public class ContactManager {
 		lblfriendspic.setBounds(0, 0, 145, 157);
 		panelFriends.add(lblfriendspic);
 		
-		panelFamily = new JPanel();
-		panelFamily.setBounds(0, 234, 474, 155);
-		frmContactManagement.getContentPane().add(panelFamily);
-		panelFamily.setLayout(null);
-		panelFamily.setBackground(SystemColor.activeCaption);
-		
-		Label lblFamily = new Label("Family");
-		lblFamily.setAlignment(Label.CENTER);
-		lblFamily.setBounds(0, 0, 474, 26);
-		panelFamily.add(lblFamily);
-		
-		lblRelationship = new JLabel("Relationship");
-		lblRelationship.setFont(new Font("Century", Font.PLAIN, 13));
-		lblRelationship.setBounds(219, 25, 109, 14);
-		panelFamily.add(lblRelationship);
-		
-		JComboBox comboBoxRelationship = new JComboBox();
-		comboBoxRelationship.setFont(new Font("Century", Font.PLAIN, 13));
-		comboBoxRelationship.setModel(new DefaultComboBoxModel(new String[] {"Father", "Mother", "Brother", "Sister", "Son", "Daughter", "Uncle", "Aunt", "Nephew", "Niece", "Father-in-Law", "Mother-in-Law", "Brother-in-Law", "Sister-in-Law", "Grandfather", "Grandmother"}));
-		comboBoxRelationship.setBounds(219, 42, 109, 20);
-		panelFamily.add(comboBoxRelationship);
-		
-		JLabel lblBirthdaymmddyyyy = new JLabel("Birthday (mm/dd/yyyy)");
-		lblBirthdaymmddyyyy.setFont(new Font("Century", Font.PLAIN, 11));
-		lblBirthdaymmddyyyy.setBounds(338, 25, 126, 14);
-		panelFamily.add(lblBirthdaymmddyyyy);
-		
-		textField = new JTextField();
-		textField.setBackground(Color.LIGHT_GRAY);
-		textField.setFont(new Font("Century", Font.PLAIN, 13));
-		textField.setBounds(338, 42, 126, 20);
-		panelFamily.add(textField);
-		textField.setColumns(10);
-		
-		lblfamilypic = new JLabel("");
-		lblfamilypic.setBounds(-19, 0, 250, 198);
-		panelFamily.add(lblfamilypic);
-		lblfamilypic.setIcon(new ImageIcon(ContactManager.class.getResource("/Pictures/familySmall.png")));
-		
 		panelBusiness = new JPanel();
 		panelBusiness.setLayout(null);
 		panelBusiness.setBackground(SystemColor.activeCaption);
-		panelBusiness.setBounds(0, 234, 474, 155);
+		panelBusiness.setBounds(0, 234, 474, 168);
 		frmContactManagement.getContentPane().add(panelBusiness);
 		
 		JLabel lblCompany = new JLabel("Company");
@@ -447,6 +489,7 @@ public class ContactManager {
 		panelBusiness.add(lblCompany);
 		
 		textCompany = new JTextField();
+		textCompany.setToolTipText("Example INC.");
 		textCompany.setBackground(Color.LIGHT_GRAY);
 		textCompany.setFont(new Font("Century", Font.PLAIN, 13));
 		textCompany.setColumns(10);
@@ -459,6 +502,7 @@ public class ContactManager {
 		panelBusiness.add(lblWorkPhone);
 		
 		textWorkPhone = new JTextField();
+		textWorkPhone.setToolTipText("(000)111-2222");
 		textWorkPhone.setBackground(Color.LIGHT_GRAY);
 		textWorkPhone.setFont(new Font("Century", Font.PLAIN, 13));
 		textWorkPhone.setColumns(10);
@@ -471,6 +515,7 @@ public class ContactManager {
 		panelBusiness.add(lblEmail);
 		
 		textEmail = new JTextField();
+		textEmail.setToolTipText("example@company.com");
 		textEmail.setBackground(Color.LIGHT_GRAY);
 		textEmail.setFont(new Font("Century", Font.PLAIN, 13));
 		textEmail.setColumns(10);
