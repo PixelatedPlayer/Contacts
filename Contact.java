@@ -13,6 +13,11 @@ import java.util.ArrayList;
  */
 public abstract class Contact implements Serializable
 {
+	public static enum ContactType
+	{
+		FRIEND, FAMILY, BUSINESS
+	}
+
 	//fields
 	private String firstName;
 	private String lastName;
@@ -21,6 +26,7 @@ public abstract class Contact implements Serializable
 	private String state;
 	private String zip;
 	private String phone;
+	protected ContactType type;
 
 	/**
 	 * Empty Contact constructor
@@ -207,6 +213,11 @@ public abstract class Contact implements Serializable
 		return false;
 	}
 
+	public ContactType getType()
+	{
+		return type;
+	}
+
 	/**
 	 * @param firstName
 	 * @return whether the given first name is valid
@@ -286,9 +297,7 @@ public abstract class Contact implements Serializable
 	 * write ArrayList<Contact> to file
 	 * 
 	 * @param contacts
-	 *            ArrayList<Contact> contacts list
 	 * @param fileName
-	 *            save destination
 	 */
 	public static void serialize(ArrayList<Contact> contacts, String fileName)
 	{
@@ -306,7 +315,6 @@ public abstract class Contact implements Serializable
 	 * read a file as ArrayList<Contact>
 	 * 
 	 * @param fileName
-	 *            read location
 	 * @return ArrayList<Contact> contacts
 	 */
 	public static ArrayList<Contact> deserialize(String fileName)

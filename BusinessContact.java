@@ -14,7 +14,7 @@ public class BusinessContact extends Contact
 	 */
 	public BusinessContact()
 	{
-
+		type = ContactType.BUSINESS;
 	}
 
 	/**
@@ -36,6 +36,7 @@ public class BusinessContact extends Contact
 		super(firstName, lastName, address, city, state, zip, phone);
 		setCompany(company);
 		setEmail(email);
+		type = ContactType.BUSINESS;
 	}
 
 	/**

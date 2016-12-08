@@ -14,7 +14,7 @@ public class FriendContact extends Contact
 	 */
 	public FriendContact()
 	{
-
+		type = ContactType.FRIEND;
 	}
 
 	/**
@@ -36,6 +36,7 @@ public class FriendContact extends Contact
 		super(firstName, lastName, address, city, state, zip, phone);
 		setHobbies(hobbies);
 		setInterests(interests);
+		type = ContactType.FRIEND;
 	}
 
 	/**

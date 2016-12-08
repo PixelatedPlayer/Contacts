@@ -1,17 +1,15 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.SystemColor;
+
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class About extends JDialog
 {
@@ -75,11 +73,11 @@ public class About extends JDialog
 			contentPanel.add(lblAboutPic);
 		}
 		{
-			JLabel lblAlfredoRodriguez = new JLabel("Alfredo Rodriguez, Christopher Schlenker");
-			lblAlfredoRodriguez.setFont(new Font("Century", Font.PLAIN, 13));
-			lblAlfredoRodriguez.setHorizontalAlignment(SwingConstants.CENTER);
-			lblAlfredoRodriguez.setBounds(10, 205, 454, 14);
-			contentPanel.add(lblAlfredoRodriguez);
+			JLabel lblAlfredoRodriguezAndChristopherSchlenker = new JLabel("Alfredo Rodriguez, Christopher Schlenker");
+			lblAlfredoRodriguezAndChristopherSchlenker.setFont(new Font("Century", Font.PLAIN, 13));
+			lblAlfredoRodriguezAndChristopherSchlenker.setHorizontalAlignment(SwingConstants.CENTER);
+			lblAlfredoRodriguezAndChristopherSchlenker.setBounds(10, 205, 454, 14);
+			contentPanel.add(lblAlfredoRodriguezAndChristopherSchlenker);
 		}
 	}
 

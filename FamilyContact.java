@@ -14,7 +14,7 @@ public class FamilyContact extends Contact
 	 */
 	public FamilyContact()
 	{
-
+		type = ContactType.FAMILY;
 	}
 
 	/**
@@ -38,6 +38,7 @@ public class FamilyContact extends Contact
 		super(firstName, lastName, address, city, state, zip, phone);
 		setRelationship(relationship);
 		setBirthday(birthday);
+		type = ContactType.FAMILY;
 	}
 
 	/**
