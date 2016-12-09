@@ -94,7 +94,7 @@ public class FamilyContact extends Contact
 	 * @param relationship
 	 * @return whether the given relationship is valid
 	 */
-	private boolean relationshipValid(String relationship)
+	public static boolean relationshipValid(String relationship)
 	{
 		for (String s : relationships)
 		{
@@ -108,7 +108,7 @@ public class FamilyContact extends Contact
 	 * @param birthday
 	 * @return whether the given birthday is valid
 	 */
-	private boolean birthdayValid(String birthday)
+	public static boolean birthdayValid(String birthday)
 	{
 		try
 		{

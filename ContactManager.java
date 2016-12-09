@@ -10,12 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -35,6 +37,7 @@ import Contact.BusinessContact;
 import Contact.Contact;
 import Contact.FamilyContact;
 import Contact.FriendContact;
+import Contact.InvalidDeletionAttemptException;
 
 public class ContactManager
 {
@@ -82,10 +85,13 @@ public class ContactManager
 	private JTextPane textPaneHobbies;
 	private JTextPane textPaneInterests;
 	private JComboBox comboBoxRelationship;
+	private JButton btnDelete;
 
 	private ArrayList<Contact> contacts;
 	private Contact selected;
-	private Contact.ContactType menu;
+	private Contact.ContactType menu = Contact.ContactType.FRIEND;
+	private boolean fileExists = false;
+	private String fileName;
 
 	/**
 	 * Launch the application.
@@ -156,16 +162,52 @@ public class ContactManager
 		menuBar.add(mnFile);
 
 		mntmOpen = new JMenuItem("Open...");
+		mntmOpen.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				fileExists = true;
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				int result = fileChooser.showOpenDialog(mnFile);
+
+				// if user clicked Cancel button on dialog, return
+				if (result == JFileChooser.CANCEL_OPTION)
+					return;
+
+				// return Path representing the selected file
+				Path filePath = fileChooser.getSelectedFile().toPath();
+				fileName = filePath.toString();
+
+				contacts = Contact.deserialize(fileName);
+				updateList(menu);
+				setContactPage(comboBox.getSelectedIndex(), menu);
+			}
+		});
 		mntmOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		mntmOpen.setFont(new Font("Century", Font.PLAIN, 12));
 		mnFile.add(mntmOpen);
 
 		mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				save();
+			}
+		});
 		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmSave.setFont(new Font("Century", Font.PLAIN, 12));
 		mnFile.add(mntmSave);
 
 		mntmSaveAs = new JMenuItem("Save as...");
+		mntmSaveAs.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				saveAs();
+			}
+		});
 		mntmSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mntmSaveAs.setFont(new Font("Century", Font.PLAIN, 12));
 		mnFile.add(mntmSaveAs);
@@ -350,7 +392,12 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-
+				if (Contact.firstNameValid(textFirstName.getText()))
+					textLastName.grabFocus();
+				else
+					JOptionPane.showMessageDialog(textFirstName,
+							"\"" + textFirstName.getText() + "\" is not a valid first name!", "Invalid Input!",
+							JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		textFirstName.setToolTipText("First Name");
@@ -677,39 +724,25 @@ public class ContactManager
 		btnUpdate.setBounds(9, 160, 89, 23);
 		panelTextFields.add(btnUpdate);
 
-		JButton btnDelete = new JButton("Delete");
+		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				int index = comboBox.getSelectedIndex();
-				//if no contact exist, just clear
-				if (contacts.size() == 0)
+				try
 				{
-					clear();
-				}
-				else
-				{
-					contacts.remove(index);
+					delete(index);
 					JOptionPane.showMessageDialog(btnDelete, "Successfully deleted contact.", "Deleted!",
 							JOptionPane.ERROR_MESSAGE);
-				}
-
-				//not that it's removed, if it was the only one
-				if (contacts.size() == 0)
+				} catch (InvalidDeletionAttemptException ex)
 				{
-					updateList(-1, menu);
+					clear();
+					JOptionPane.showMessageDialog(btnDelete,
+							"Deletion failed. Please select a contact before attempting to delete it.",
+							"InvalidDeletionAttemptException!",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				else
-				{
-					//if multiple contacts and not first selection, go down by one index
-					if (index != 0)
-						updateList(index - 1, menu);
-					//if multiple contacts and first selection, re select the first.
-					else
-						updateList(0, menu);
-				}
-				updateList(comboBox.getSelectedIndex(), menu);
 			}
 		});
 		btnDelete.setToolTipText("Delete Contact");
@@ -871,8 +904,13 @@ public class ContactManager
 		if (contacts.size() == 0)
 			return;
 		//if you are not selecting something, select it
-		if (index == -1)
+		if (index >= contacts.size())
+		{
 			index = 0;
+		}
+		if (index == -1)
+			return;
+
 		System.out.println(contacts.size() + ", " + index);
 		Contact contact = contacts.get(index);
 
@@ -958,5 +996,69 @@ public class ContactManager
 		//business
 		textCompany.setText("");
 		textEmail.setText("");
+	}
+
+	//save contacts to fileName
+	private void save()
+	{
+		//if the file already exists, save over it
+		if (fileExists)
+			Contact.serialize(contacts, fileName);
+		//if not saveAs
+		else
+			saveAs();
+	}
+
+	//save contacts to new file
+	private void saveAs()
+	{
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		int result = fileChooser.showSaveDialog(mnFile);
+
+		// if user clicked Cancel button on dialog, return
+		if (result == JFileChooser.CANCEL_OPTION)
+			return;
+
+		// return Path representing the selected file
+		Path filePath = fileChooser.getSelectedFile().toPath();
+		fileName = filePath.toString();
+		Contact.serialize(contacts, fileName);
+		fileExists = true;
+	}
+
+	private void delete(int index) throws InvalidDeletionAttemptException
+	{
+		try
+		{
+			//if no contact exist, just clear
+			if (contacts.size() == 0)
+			{
+				throw new InvalidDeletionAttemptException();
+			}
+			else
+			{
+				contacts.remove(index);
+			}
+
+			//now that it's removed, if it was the only one
+			if (contacts.size() == 0)
+			{
+				updateList(-1, menu);
+			}
+			else
+			{
+				//if multiple contacts and not first selection, go down by one index
+				if (index != 0)
+					updateList(index - 1, menu);
+				//if multiple contacts and first selection, re select the first.
+				else
+					updateList(0, menu);
+			}
+			updateList(comboBox.getSelectedIndex(), menu);
+		} catch (Exception ex)
+		{
+			throw new InvalidDeletionAttemptException();
+		}
 	}
 }

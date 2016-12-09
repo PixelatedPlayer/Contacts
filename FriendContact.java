@@ -87,7 +87,7 @@ public class FriendContact extends Contact
 	 * @param hobbies
 	 * @return whether the given hobbies string is valid
 	 */
-	private boolean hobbiesValid(String hobbies)
+	public static boolean hobbiesValid(String hobbies)
 	{
 		return true;
 	}
@@ -96,7 +96,7 @@ public class FriendContact extends Contact
 	 * @param interests
 	 * @return whether the given interests string is valid
 	 */
-	private boolean interestsValid(String interests)
+	public static boolean interestsValid(String interests)
 	{
 		return true;
 	}

@@ -222,7 +222,7 @@ public abstract class Contact implements Serializable
 	 * @param firstName
 	 * @return whether the given first name is valid
 	 */
-	private boolean firstNameValid(String firstName)
+	public static boolean firstNameValid(String firstName)
 	{
 		return firstName.matches("[A-Z][a-zA-Z'-]*");
 	}
@@ -231,7 +231,7 @@ public abstract class Contact implements Serializable
 	 * @param lastName
 	 * @return whether the given last name is valid
 	 */
-	private boolean lastNameValid(String lastName)
+	public static boolean lastNameValid(String lastName)
 	{
 		return lastName.matches("[A-Z][a-zA-Z'-]*");
 	}
@@ -240,7 +240,7 @@ public abstract class Contact implements Serializable
 	 * @param address
 	 * @return whether the given address is valid
 	 */
-	private boolean addressValid(String address)
+	public static boolean addressValid(String address)
 	{
 		return address.matches("[0-9A-Za-z #,.]*");
 	}
@@ -249,7 +249,7 @@ public abstract class Contact implements Serializable
 	 * @param city
 	 * @return whether the given city is valid
 	 */
-	private boolean cityValid(String city)
+	public static boolean cityValid(String city)
 	{
 		return city.matches("([A-Z][a-z]*[-' ]?)+");
 	}
@@ -258,7 +258,7 @@ public abstract class Contact implements Serializable
 	 * @param state
 	 * @return whether the given state is valid
 	 */
-	private boolean stateValid(String state)
+	public static boolean stateValid(String state)
 	{
 		return state.matches("[A-Z]{2}");
 	}
@@ -267,7 +267,7 @@ public abstract class Contact implements Serializable
 	 * @param zip
 	 * @return whether the given zip code is valid
 	 */
-	private boolean zipValid(String zip)
+	public static boolean zipValid(String zip)
 	{
 		return zip.matches("[0-9]{5}");
 	}
@@ -276,7 +276,7 @@ public abstract class Contact implements Serializable
 	 * @param phone
 	 * @return whether the given phone number is valid
 	 */
-	private boolean phoneValid(String phone)
+	public static boolean phoneValid(String phone)
 	{
 		return phone.matches("\\(([0-9]{3})\\)([0-9]{3})-([0-9]{4})")
 				|| phone.matches("([0-9]{3})-([0-9]{3})-([0-9]{4})")

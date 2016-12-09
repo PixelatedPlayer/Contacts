@@ -87,7 +87,7 @@ public class BusinessContact extends Contact
 	 * @param company
 	 * @return whether the given company name is valid
 	 */
-	private boolean companyValid(String company)
+	public static boolean companyValid(String company)
 	{
 		return true;
 	}
@@ -96,7 +96,7 @@ public class BusinessContact extends Contact
 	 * @param email
 	 * @return whether the given email is valid
 	 */
-	private boolean emailValid(String email)
+	public static boolean emailValid(String email)
 	{
 		return email.matches("^[A-Za-z0-9._]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 	}
