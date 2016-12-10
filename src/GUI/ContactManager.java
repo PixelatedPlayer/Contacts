@@ -645,7 +645,8 @@ public class ContactManager
 					if (!((FriendContact) toAdd).setInterests(textPaneInterests.getText()))
 						invalidFields.add("interests");
 
-					contacts.add(toAdd);
+					if (invalidFields.size() != 7)
+						contacts.add(toAdd);
 
 				}
 				else if (menu == Contact.ContactType.FAMILY)
@@ -672,7 +673,8 @@ public class ContactManager
 					if (!((FamilyContact) toAdd).setBirthday(textFieldBirthday.getText()))
 						invalidFields.add("birthday");
 
-					contacts.add(toAdd);
+					if (invalidFields.size() != 8)
+						contacts.add(toAdd);
 				}
 				else if (menu == Contact.ContactType.BUSINESS)
 				{
@@ -698,7 +700,8 @@ public class ContactManager
 					if (!((BusinessContact) toAdd).setEmail(textEmail.getText()))
 						invalidFields.add("email");
 
-					contacts.add(toAdd);
+					if (invalidFields.size() != 8)
+						contacts.add(toAdd);
 				}
 
 				//no invalid fields
@@ -716,8 +719,8 @@ public class ContactManager
 					}
 
 					JOptionPane.showMessageDialog(btnAdd,
-							"Error updating contact! Fields (" + buffer
-									+ ") are either invalid or empty. Updated all other fields.",
+							"Error adding contact! Fields (" + buffer
+									+ ") are either invalid or empty. Added all other fields.",
 							"Error!", JOptionPane.ERROR_MESSAGE);
 				}
 

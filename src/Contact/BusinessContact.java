@@ -21,14 +21,23 @@ public class BusinessContact extends Contact
 	 * Parameterized BusinessContact constructor
 	 * 
 	 * @param firstName
+	 *            first name of the contact
 	 * @param lastName
+	 *            last name of the contact
 	 * @param address
+	 *            address of the contact
 	 * @param city
+	 *            city of the contact
 	 * @param state
+	 *            state of the contact
 	 * @param zip
+	 *            zip code of the contact
 	 * @param phone
+	 *            phone number of the contact
 	 * @param company
+	 *            company of the contact
 	 * @param email
+	 *            email of the contact
 	 */
 	public BusinessContact(String firstName, String lastName, String address, String city, String state, String zip,
 			String phone, String company, String email)
@@ -49,6 +58,7 @@ public class BusinessContact extends Contact
 
 	/**
 	 * @param company
+	 *            company of the contact
 	 * @return whether the given company name is valid
 	 */
 	public boolean setCompany(String company)
@@ -71,6 +81,7 @@ public class BusinessContact extends Contact
 
 	/**
 	 * @param email
+	 *            email of the contact
 	 * @return whether the given email is valid
 	 */
 	public boolean setEmail(String email)
@@ -85,6 +96,7 @@ public class BusinessContact extends Contact
 
 	/**
 	 * @param company
+	 *            company name to validate
 	 * @return whether the given company name is valid
 	 */
 	public static boolean companyValid(String company)
@@ -94,6 +106,7 @@ public class BusinessContact extends Contact
 
 	/**
 	 * @param email
+	 *            email to validate
 	 * @return whether the given email is valid
 	 */
 	public static boolean emailValid(String email)

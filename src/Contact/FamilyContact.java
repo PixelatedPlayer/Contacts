@@ -21,16 +21,23 @@ public class FamilyContact extends Contact
 	 * Parameterized FamilyContact constructor
 	 * 
 	 * @param firstName
+	 *            first name of the contact
 	 * @param lastName
+	 *            last name of the contact
 	 * @param address
+	 *            address of the contact
 	 * @param city
+	 *            city of the contact
 	 * @param state
+	 *            state of the contact
 	 * @param zip
+	 *            zip code of the contact
 	 * @param phone
+	 *            phone number of the contact
 	 * @param relationship
-	 * @param birthdayMonth
-	 * @param birthdayDay
-	 * @param birthdayYear
+	 *            relationship the user has with the contact
+	 * @param birthday
+	 *            birthday of the contact
 	 */
 	public FamilyContact(String firstName, String lastName, String address, String city, String state, String zip,
 			String phone, String relationship, String birthday)
@@ -51,6 +58,7 @@ public class FamilyContact extends Contact
 
 	/**
 	 * @param relationship
+	 *            relationship the user has with the contact
 	 * @return whether the given relationship is valid
 	 */
 	public boolean setRelationship(String relationship)
@@ -65,6 +73,7 @@ public class FamilyContact extends Contact
 
 	/**
 	 * @param birthday
+	 *            birthday of the contact
 	 * @return whether the given birthday date is valid
 	 */
 	public boolean setBirthday(String birthday)
@@ -92,6 +101,7 @@ public class FamilyContact extends Contact
 
 	/**
 	 * @param relationship
+	 *            relationship to validate
 	 * @return whether the given relationship is valid
 	 */
 	public static boolean relationshipValid(String relationship)
@@ -106,6 +116,7 @@ public class FamilyContact extends Contact
 
 	/**
 	 * @param birthday
+	 *            birthday to validate
 	 * @return whether the given birthday is valid
 	 */
 	public static boolean birthdayValid(String birthday)

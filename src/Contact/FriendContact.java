@@ -21,14 +21,23 @@ public class FriendContact extends Contact
 	 * Parametrized FriendContact constructor
 	 * 
 	 * @param firstName
+	 *            first name of the contact
 	 * @param lastName
+	 *            last name of the contact
 	 * @param address
+	 *            address of the contact
 	 * @param city
+	 *            city of the contact
 	 * @param state
+	 *            state of the contact
 	 * @param zip
+	 *            zip code of the contact
 	 * @param phone
+	 *            phone number of the contact
 	 * @param hobbies
+	 *            hobbies of the contact
 	 * @param interests
+	 *            interests of the contact
 	 */
 	public FriendContact(String firstName, String lastName, String address, String city, String state, String zip,
 			String phone, String hobbies, String interests)
@@ -49,6 +58,7 @@ public class FriendContact extends Contact
 
 	/**
 	 * @param hobbies
+	 *            hobbies of the contact
 	 * @return whether the given hobbies string is valid
 	 */
 	public boolean setHobbies(String hobbies)
@@ -71,6 +81,7 @@ public class FriendContact extends Contact
 
 	/**
 	 * @param interests
+	 *            of the contact
 	 * @return whether the given interests string is valid
 	 */
 	public boolean setInterests(String interests)
@@ -85,6 +96,7 @@ public class FriendContact extends Contact
 
 	/**
 	 * @param hobbies
+	 *            hobbies to validate
 	 * @return whether the given hobbies string is valid
 	 */
 	public static boolean hobbiesValid(String hobbies)
@@ -94,6 +106,7 @@ public class FriendContact extends Contact
 
 	/**
 	 * @param interests
+	 *            interests to validate
 	 * @return whether the given interests string is valid
 	 */
 	public static boolean interestsValid(String interests)

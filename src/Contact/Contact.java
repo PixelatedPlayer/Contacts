@@ -40,12 +40,19 @@ public abstract class Contact implements Serializable
 	 * Parameterized Contact constructor
 	 * 
 	 * @param firstName
+	 *            first name of the contact
 	 * @param lastName
+	 *            last name of the contact
 	 * @param address
+	 *            address of the contact
 	 * @param city
+	 *            city of the contact
 	 * @param state
+	 *            state of the contact
 	 * @param zip
+	 *            zip code of the contact
 	 * @param phone
+	 *            phone number of the contact
 	 */
 	public Contact(String firstName, String lastName, String address, String city, String state, String zip,
 			String phone)
@@ -69,6 +76,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param firstName
+	 *            first name of the contact
 	 * @return whether the given first name is valid
 	 */
 	public boolean setFirstName(String firstName)
@@ -91,6 +99,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param lastName
+	 *            last name of the contact
 	 * @return whether the given last name is valid
 	 */
 	public boolean setLastName(String lastName)
@@ -113,6 +122,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param address
+	 *            address of the contact
 	 * @return whether the given address is valid
 	 */
 	public boolean setAddress(String address)
@@ -135,6 +145,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param city
+	 *            city of the contact
 	 * @return whether the given city is valid
 	 */
 	public boolean setCity(String city)
@@ -157,6 +168,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param state
+	 *            state of the contact
 	 * @return whether the given state is valid
 	 */
 	public boolean setState(String state)
@@ -179,6 +191,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param zip
+	 *            zip code of the contact
 	 * @return whether the given zip code is valid
 	 */
 	public boolean setZip(String zip)
@@ -201,6 +214,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param phone
+	 *            phone number of the contact
 	 * @return whether the given phone number is valid
 	 */
 	public boolean setPhone(String phone)
@@ -220,6 +234,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param firstName
+	 *            first name to validate
 	 * @return whether the given first name is valid
 	 */
 	public static boolean firstNameValid(String firstName)
@@ -229,6 +244,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param lastName
+	 *            last name to validate
 	 * @return whether the given last name is valid
 	 */
 	public static boolean lastNameValid(String lastName)
@@ -238,6 +254,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param address
+	 *            address to validate
 	 * @return whether the given address is valid
 	 */
 	public static boolean addressValid(String address)
@@ -247,6 +264,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param city
+	 *            city to validate
 	 * @return whether the given city is valid
 	 */
 	public static boolean cityValid(String city)
@@ -256,6 +274,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param state
+	 *            state to validate
 	 * @return whether the given state is valid
 	 */
 	public static boolean stateValid(String state)
@@ -265,6 +284,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param zip
+	 *            zip code to validate
 	 * @return whether the given zip code is valid
 	 */
 	public static boolean zipValid(String zip)
@@ -274,6 +294,7 @@ public abstract class Contact implements Serializable
 
 	/**
 	 * @param phone
+	 *            phone number to validate
 	 * @return whether the given phone number is valid
 	 */
 	public static boolean phoneValid(String phone)
@@ -298,7 +319,9 @@ public abstract class Contact implements Serializable
 	 * write ArrayList<Contact> to file
 	 * 
 	 * @param contacts
+	 *            list of contacts to serialize
 	 * @param fileName
+	 *            file location to serialize to
 	 */
 	public static void serialize(ArrayList<Contact> contacts, String fileName)
 	{
@@ -316,6 +339,7 @@ public abstract class Contact implements Serializable
 	 * read a file as ArrayList<Contact>
 	 * 
 	 * @param fileName
+	 *            file location to deserialize
 	 * @return ArrayList<Contact> contacts
 	 */
 	public static ArrayList<Contact> deserialize(String fileName)
