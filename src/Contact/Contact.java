@@ -260,7 +260,7 @@ public abstract class Contact implements Serializable
 	 */
 	public static boolean stateValid(String state)
 	{
-		return state.matches("[A-Z]{2}");
+		return state.matches("[A-Za-z]{2}");
 	}
 
 	/**
@@ -269,7 +269,7 @@ public abstract class Contact implements Serializable
 	 */
 	public static boolean zipValid(String zip)
 	{
-		return zip.matches("[0-9]{5}");
+		return zip.matches("[0-9]{5}(-[0-9]{4})?");
 	}
 
 	/**
@@ -281,7 +281,8 @@ public abstract class Contact implements Serializable
 		return phone.matches("\\(([0-9]{3})\\)([0-9]{3})-([0-9]{4})")
 				|| phone.matches("([0-9]{3})-([0-9]{3})-([0-9]{4})")
 				|| phone.matches("([0-9]{3})\\.([0-9]{3})\\.([0-9]{4})")
-				|| phone.matches("\\(?[0-9]{3}\\)? [0-9]{3} [0-9]{4}");
+				|| phone.matches("\\(?[0-9]{3}\\)? [0-9]{3} [0-9]{4}")
+				|| phone.matches("[0-9]{10}");
 	}
 
 	/**
