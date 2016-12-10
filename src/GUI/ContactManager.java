@@ -301,7 +301,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (FamilyContact.birthdayValid(textFieldBirthday.getText()) || textFieldBirthday.getText().isEmpty())
+				if (FamilyContact.birthdayValid(textFieldBirthday.getText()))
 					btnAdd.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textFieldBirthday,
@@ -415,7 +415,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if (Contact.firstNameValid(textFirstName.getText()) || textFirstName.getText().isEmpty())
+				if (Contact.firstNameValid(textFirstName.getText()))
 					textLastName.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textFirstName,
@@ -437,7 +437,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if ((Contact.lastNameValid(textLastName.getText()) || textLastName.getText().isEmpty()))
+				if (Contact.lastNameValid(textLastName.getText()))
 					textAddress.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textLastName,
@@ -459,7 +459,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.addressValid(textAddress.getText()) || textAddress.getText().isEmpty())
+				if (Contact.addressValid(textAddress.getText()))
 					textCity.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textAddress,
@@ -479,7 +479,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.cityValid(textCity.getText()) || textCity.getText().isEmpty())
+				if (Contact.cityValid(textCity.getText()))
 					textState.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textCity,
@@ -501,7 +501,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.stateValid(textState.getText()) || textState.getText().isEmpty())
+				if (Contact.stateValid(textState.getText()))
 					textZipCode.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textState,
@@ -522,7 +522,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.zipValid(textZipCode.getText()) || textZipCode.getText().isEmpty())
+				if (Contact.zipValid(textZipCode.getText()))
 					textMobileNumber.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textZipCode,
@@ -543,7 +543,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.phoneValid(textMobileNumber.getText()) || textMobileNumber.getText().isEmpty())
+				if (Contact.phoneValid(textMobileNumber.getText()))
 				{
 					if (menu == Contact.ContactType.FRIEND)
 						textPaneHobbies.grabFocus();
@@ -975,7 +975,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (BusinessContact.emailValid(textEmail.getText()) || textEmail.getText().isEmpty())
+				if (BusinessContact.emailValid(textEmail.getText()))
 					btnAdd.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textEmail,
