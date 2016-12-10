@@ -301,7 +301,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (FamilyContact.birthdayValid(textFieldBirthday.getText()) || textFieldBirthday.getText() == "")
+				if (FamilyContact.birthdayValid(textFieldBirthday.getText()) || textFieldBirthday.getText().isEmpty())
 					btnAdd.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textFieldBirthday,
@@ -415,7 +415,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if (Contact.firstNameValid(textFirstName.getText()) || textFirstName.getText() == "")
+				if (Contact.firstNameValid(textFirstName.getText()) || textFirstName.getText().isEmpty())
 					textLastName.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textFirstName,
@@ -437,7 +437,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if (Contact.lastNameValid(textLastName.getText()) || textLastName.getText() == "")
+				if ((Contact.lastNameValid(textLastName.getText()) || textLastName.getText().isEmpty()))
 					textAddress.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textLastName,
@@ -459,7 +459,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.addressValid(textAddress.getText()) || textAddress.getText() == "")
+				if (Contact.addressValid(textAddress.getText()) || textAddress.getText().isEmpty())
 					textCity.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textAddress,
@@ -479,11 +479,13 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.cityValid(textCity.getText()) || textCity.getText() == "")
+				if (Contact.cityValid(textCity.getText()) || textCity.getText().isEmpty())
 					textState.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textCity,
-							"\"" + textCity.getText() + "\" is not a city name!", "Invalid Input!",
+							"\"" + textCity.getText()
+									+ "\" is not a valid city name! City names must begin with a capital letter",
+							"Invalid Input!",
 							JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -499,7 +501,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.stateValid(textState.getText()) || textState.getText() == "")
+				if (Contact.stateValid(textState.getText()) || textState.getText().isEmpty())
 					textZipCode.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textState,
@@ -520,7 +522,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.zipValid(textZipCode.getText()) || textZipCode.getText() == "")
+				if (Contact.zipValid(textZipCode.getText()) || textZipCode.getText().isEmpty())
 					textMobileNumber.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textZipCode,
@@ -541,7 +543,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.phoneValid(textMobileNumber.getText()) || textMobileNumber.getText() == "")
+				if (Contact.phoneValid(textMobileNumber.getText()) || textMobileNumber.getText().isEmpty())
 				{
 					if (menu == Contact.ContactType.FRIEND)
 						textPaneHobbies.grabFocus();
@@ -714,7 +716,8 @@ public class ContactManager
 					}
 
 					JOptionPane.showMessageDialog(btnAdd,
-							"Error updating contact! Fields (" + buffer + ") are invalid. Updated all other fields.",
+							"Error updating contact! Fields (" + buffer
+									+ ") are either invalid or empty. Updated all other fields.",
 							"Error!", JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -820,7 +823,8 @@ public class ContactManager
 					}
 
 					JOptionPane.showMessageDialog(btnAdd,
-							"Error updating contact! Fields (" + buffer + ") are invalid. Updated all other fields.",
+							"Error updating contact! Fields (" + buffer
+									+ ") are either invalid or empty. Updated all other fields.",
 							"Error!", JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -971,7 +975,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (BusinessContact.emailValid(textEmail.getText()))
+				if (BusinessContact.emailValid(textEmail.getText()) || textEmail.getText().isEmpty())
 					btnAdd.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textEmail,
