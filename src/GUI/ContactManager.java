@@ -179,7 +179,15 @@ public class ContactManager
 				Path filePath = fileChooser.getSelectedFile().toPath();
 				fileName = filePath.toString();
 
-				contacts = Contact.deserialize(fileName);
+				ArrayList<Contact> contactsBuffer = Contact.deserialize(fileName);
+				if (contactsBuffer == null)
+				{
+					JOptionPane.showMessageDialog(mntmOpen, "Error loading file.", "Invalid File!",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				contacts = contactsBuffer;
 				updateList(menu);
 				setContactPage(comboBox.getSelectedIndex(), menu);
 			}
@@ -293,7 +301,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (FamilyContact.birthdayValid(textFieldBirthday.getText()))
+				if (FamilyContact.birthdayValid(textFieldBirthday.getText()) || textFieldBirthday.getText() == "")
 					btnAdd.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textFieldBirthday,
@@ -407,11 +415,13 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if (Contact.firstNameValid(textFirstName.getText()))
+				if (Contact.firstNameValid(textFirstName.getText()) || textFirstName.getText() == "")
 					textLastName.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textFirstName,
-							"\"" + textFirstName.getText() + "\" is not a valid first name!", "Invalid Input!",
+							"\"" + textFirstName.getText()
+									+ "\" is not a valid first name! Names must begin with a capital letter.",
+							"Invalid Input!",
 							JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -427,11 +437,13 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if (Contact.lastNameValid(textLastName.getText()))
+				if (Contact.lastNameValid(textLastName.getText()) || textLastName.getText() == "")
 					textAddress.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textLastName,
-							"\"" + textLastName.getText() + "\" is not a valid last name!", "Invalid Input!",
+							"\"" + textLastName.getText()
+									+ "\" is not a valid last name! Names must begin with a capital letter.",
+							"Invalid Input!",
 							JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -447,7 +459,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.addressValid(textAddress.getText()))
+				if (Contact.addressValid(textAddress.getText()) || textAddress.getText() == "")
 					textCity.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textAddress,
@@ -467,7 +479,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.cityValid(textCity.getText()))
+				if (Contact.cityValid(textCity.getText()) || textCity.getText() == "")
 					textState.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textCity,
@@ -487,11 +499,12 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.stateValid(textState.getText()))
+				if (Contact.stateValid(textState.getText()) || textState.getText() == "")
 					textZipCode.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textState,
-							"\"" + textState.getText() + "\" is not a valid state!", "Invalid Input!",
+							"\"" + textState.getText() + "\" is not a valid state! Use the state abbreviation.",
+							"Invalid Input!",
 							JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -507,11 +520,12 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.zipValid(textZipCode.getText()))
+				if (Contact.zipValid(textZipCode.getText()) || textZipCode.getText() == "")
 					textMobileNumber.grabFocus();
 				else
 					JOptionPane.showMessageDialog(textZipCode,
-							"\"" + textZipCode.getText() + "\" is not a valid zip code!", "Invalid Input!",
+							"\"" + textZipCode.getText() + "\" is not a valid zip code! Zip codes are 5 digits.",
+							"Invalid Input!",
 							JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -527,7 +541,7 @@ public class ContactManager
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (Contact.phoneValid(textMobileNumber.getText()))
+				if (Contact.phoneValid(textMobileNumber.getText()) || textMobileNumber.getText() == "")
 				{
 					if (menu == Contact.ContactType.FRIEND)
 						textPaneHobbies.grabFocus();
@@ -871,7 +885,7 @@ public class ContactManager
 				if (comboBox.getSelectedIndex() == -1)
 					return;
 
-				selected = contacts.get(comboBox.getSelectedIndex());
+				selected = getContactsOfType(menu).get(comboBox.getSelectedIndex());
 				setContactPage(comboBox.getSelectedIndex(), menu);
 			}
 		});
