@@ -78,7 +78,6 @@ public class ContactManager
 	private JLabel lblfriendspic;
 	private JLabel lblBusinessPic;
 	private JSeparator separator;
-	private JMenuItem mntmJavadoc;
 	private JComboBox comboBox;
 	private JLabel lblContact;
 	private JMenuItem mntmOpen;
@@ -233,17 +232,6 @@ public class ContactManager
 		JMenu mnHelp = new JMenu("Help     ");
 		mnHelp.setFont(new Font("Century", Font.PLAIN, 12));
 		menuBar.add(mnHelp);
-
-		mntmJavadoc = new JMenuItem("JavaDoc");
-		mntmJavadoc.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-
-			}
-		});
-		mntmJavadoc.setFont(new Font("Century", Font.PLAIN, 12));
-		mnHelp.add(mntmJavadoc);
 
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.addActionListener(new ActionListener()
@@ -838,9 +826,9 @@ public class ContactManager
 				int index = comboBox.getSelectedIndex();
 				try
 				{
-					delete(index);
+					delete(index, menu);
 					JOptionPane.showMessageDialog(btnDelete, "Successfully deleted contact.", "Deleted!",
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.INFORMATION_MESSAGE);
 				} catch (InvalidDeletionAttemptException ex)
 				{
 					clear();
@@ -1028,21 +1016,34 @@ public class ContactManager
 		updateList(index, type);
 	}
 
+	private ArrayList<Contact> getContactsOfType(Contact.ContactType type)
+	{
+		ArrayList<Contact> contactsOfType = new ArrayList<Contact>();
+
+		for (Contact c : contacts)
+		{
+			if (c.getType() == type)
+				contactsOfType.add(c);
+		}
+
+		return contactsOfType;
+	}
+
 	//set values. should only be changed upon change in comboBox selection or loading, so no need to update the comboBox.
 	private void setContactPage(int index, Contact.ContactType type)
 	{
 		//stop trying if empty
-		if (contacts.size() == 0)
+		if (getContactsOfType(type).size() == 0)
 			return;
 		//if you are not selecting something, select it
-		if (index >= contacts.size())
+		if (index >= getContactsOfType(type).size())
 		{
 			index = 0;
 		}
 		if (index == -1)
 			return;
 
-		Contact contact = contacts.get(index);
+		Contact contact = getContactsOfType(type).get(index);
 
 		comboBox.setSelectedIndex(index);
 
@@ -1155,22 +1156,22 @@ public class ContactManager
 		fileExists = true;
 	}
 
-	private void delete(int index) throws InvalidDeletionAttemptException
+	private void delete(int index, Contact.ContactType type) throws InvalidDeletionAttemptException
 	{
 		try
 		{
 			//if no contact exist, just clear
-			if (contacts.size() == 0)
+			if (getContactsOfType(type).size() == 0)
 			{
 				throw new InvalidDeletionAttemptException();
 			}
 			else
 			{
-				contacts.remove(index);
+				contacts.remove(getContactsOfType(type).get(index));
 			}
 
 			//now that it's removed, if it was the only one
-			if (contacts.size() == 0)
+			if (getContactsOfType(type).size() == 0)
 			{
 				updateList(-1, menu);
 			}
